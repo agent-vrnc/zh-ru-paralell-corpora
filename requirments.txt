@@ -1,0 +1,12 @@
+pandas
+openpyxl
+selenium
+beautifulsoup4
+requests
+tqdm
+transformers
+sentencepiece
+sacrebleu
+evaluate
+unbabel-comet
+torch
