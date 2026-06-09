@@ -2,14 +2,14 @@ import re
 import csv
 
 # файлы со ссылками
-RU_FILE = 'ru_links_interview.txt'
-ZH_FILE = 'zh_links_interview.txt'
+RU_FILE = 'ru_links.txt'
+ZH_FILE = 'zh_links.txt'
 
 OUTPUT_FILE = 'matched_links_interview.csv'
 
 
 def load_links(filename):
-    """Читает ссылки и удаляет дубли"""
+    """читает ссылки и удаляет дубликаты"""
     with open(filename, 'r', encoding='utf-8') as f:
         return sorted(set(
             line.strip()
@@ -19,9 +19,7 @@ def load_links(filename):
 
 
 def extract_date(url):
-    """
-    Извлекает дату вида 20260430 из URL
-    """
+    """ извлекает дату вида 20260430 из URL """
     match = re.search(r't(\d{8})_', url)
 
     if match:
@@ -30,11 +28,9 @@ def extract_date(url):
     return None
 
 
-# загружаем ссылки
 ru_links = load_links(RU_FILE)
 zh_links = load_links(ZH_FILE)
 
-# словари: дата -> ссылка
 ru_dict = {}
 zh_dict = {}
 
@@ -54,10 +50,8 @@ for link in zh_links:
         zh_dict[date] = link
 
 
-# все даты
 all_dates = sorted(set(ru_dict.keys()) | set(zh_dict.keys()))
 
-# записываем CSV
 with open(OUTPUT_FILE, 'w', newline='', encoding='utf-8-sig') as f:
 
     writer = csv.writer(f)
