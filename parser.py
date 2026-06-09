@@ -8,22 +8,21 @@ import time
 
 options = webdriver.ChromeOptions()
 
-# ускоряет работу
+# ускоряет работу, при необходимости можно убрать
 options.add_argument('--disable-blink-features=AutomationControlled')
 options.add_argument('--disable-gpu')
 options.add_argument('--no-sandbox')
 
-# главное:
 options.page_load_strategy = 'eager'
 
 driver = webdriver.Chrome(options=options)
 
 sites = {
-    'ru': 'https://vladivostok.china-consulate.gov.cn/rus/zlgdt_2/',
-    'zh': 'https://vladivostok.china-consulate.gov.cn/chn/zlgdt/'
+    'ru': 'https://saintpetersburg.china-consulate.gov.cn/rus/zgxw/', #ссылки можно изменить на другие
+    'zh': 'https://saintpetersburg.china-consulate.gov.cn/chn/zgxw/'
 }
 
-MAX_PAGES = 10
+MAX_PAGES = 10 #максимальное число страниц, при необходимости можно изменить
 
 for lang, base_url in sites.items():
 
@@ -40,12 +39,10 @@ for lang, base_url in sites.items():
 
         try:
 
-            # timeout страницы
             driver.set_page_load_timeout(15)
 
             driver.get(url)
 
-            # ждём появления ссылок
             WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located(
                     (By.CSS_SELECTOR, '.title_list a')
@@ -89,9 +86,8 @@ for lang, base_url in sites.items():
 
         time.sleep(1)
 
-    # сохраняем
     with open(
-        f'{lang}_links_interview_vld.txt',
+        f'{lang}_links.txt',
         'w',
         encoding='utf-8'
     ) as f:
